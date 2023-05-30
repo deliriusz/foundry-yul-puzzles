@@ -28,3 +28,9 @@ To see the console logs during tests
 ```
 forge test -vvv
 ```
+
+## Contributing
+Feel free to create new puzzles and create pull request to merge it. To create a puzzle:
+1. copy `yul/_Template.yul`, rename it and provide puzzle description
+2. copy `test_Template.t.yul`, rename it and provide all test cases verifying correctness of the solution
+3. write solution to the puzzle to `solutions` folder

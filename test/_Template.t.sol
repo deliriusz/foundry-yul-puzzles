@@ -15,7 +15,7 @@ contract _TemplateTest is Test {
         exampleContract = _Template(yulDeployer.deployContract("_Template"));
     }
 
-    function test_Template() public {
+    function test__Template() public {
         bytes memory callDataBytes = abi.encodeWithSignature("randomBytes()");
 
         (bool success, bytes memory data) = address(exampleContract).call{gas: 100000, value: 0}(callDataBytes);
