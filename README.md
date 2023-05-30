@@ -1,4 +1,5 @@
-# Yul developer experience
+# About
+This is a repo containing Yul puzzles to improve your Yul skills. Shoutdout to CodeForce, who created this template.
 
 ## Repository installation
 

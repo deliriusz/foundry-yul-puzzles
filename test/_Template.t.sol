@@ -4,18 +4,18 @@ pragma solidity >=0.8.0;
 import "forge-std/Test.sol";
 import "./lib/YulDeployer.sol";
 
-interface Example {}
+interface _Template {}
 
-contract ExampleTest is Test {
+contract _TemplateTest is Test {
     YulDeployer yulDeployer = new YulDeployer();
 
-    Example exampleContract;
+    _Template exampleContract;
 
     function setUp() public {
-        exampleContract = Example(yulDeployer.deployContract("Example"));
+        exampleContract = _Template(yulDeployer.deployContract("_Template"));
     }
 
-    function testExample() public {
+    function test_Template() public {
         bytes memory callDataBytes = abi.encodeWithSignature("randomBytes()");
 
         (bool success, bytes memory data) = address(exampleContract).call{gas: 100000, value: 0}(callDataBytes);
