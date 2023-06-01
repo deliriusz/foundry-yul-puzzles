@@ -45,6 +45,8 @@ object "Counter" {
       // it's useful to zero out unnecessary bits using `and()` and `or()`
       let mask := 0xffffffffffffffffffffffffffffffffffffffff
 
+      // Solidity contracts have very similar logic, i.e., take first 4 bytes (function selector),
+      // do a switch statement, matching function signatures. When you find one, execute code inside
       switch selector
       case 0xe8927fbc { // increase()
         let slot0 := sload(0)
