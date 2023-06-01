@@ -35,8 +35,9 @@ object "LoremMorty" {
       let fmp := mload(0x40)
 
       // if free memory pointer is not initialized, set it to 0x60
-      // please note that Solidity uses this word as "0" slot,
-      // however we don't use Solidity here, so we don't have to obey those rules.
+      // this is a bit Solidity-ish, as in Yul you're free to use whichever memory slot you want
+      // please note that Solidity uses 0x60 word as "0" slot, and 0x40 as free memory pointer
+      // as a matter of showing how it works, I do memory expansion similar to how Solidity whould do it
       if iszero(fmp) {
          mstore(0x40, 0x60)
          fmp := 0x60
