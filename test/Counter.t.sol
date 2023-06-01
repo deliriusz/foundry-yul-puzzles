@@ -29,17 +29,22 @@ contract CounterTest is Test {
 
         assertEq(counter.counter(), 1);
         // make sure you didn't mess up storage
-        assertEq(slot0, bytes32(abi.encodePacked(uint96(1), address(msg.sender))));
+        assertEq(slot0, bytes32(abi.encodePacked(uint96(1), address(yulDeployer))));
+
+        for(uint i; i < 10; i++) {
+           counter.increase();
+        }
+
+        // test the same for other values
+        slot0 = vm.load(address(counter), 0x0);
+
+        assertEq(counter.counter(), 11);
+        // make sure you didn't mess up storage
+        assertEq(slot0, bytes32(abi.encodePacked(uint96(11), address(yulDeployer))));
     }
 
     function test_Counter_owner() public {
-        assertEq(counter.owner(), msg.sender);
-
-        vm.startPrank(secondOwner);
-        ICounter newCounter = ICounter(yulDeployer.deployContract("Counter"));
-        vm.stopPrank();
-
-        assertEq(newCounter.owner(), secondOwner);
+        assertEq(counter.owner(), address(yulDeployer));
     }
 
     function test_Counter_decrease() public {
@@ -50,7 +55,7 @@ contract CounterTest is Test {
         assertEq(counter.counter(), 1000);
 
         // expect revert, because this function accepts only 64 bits uint
-        (bool status, bytes memory data) = address(counter).call(
+        (bool status, ) = address(counter).call(
             abi.encodeWithSignature("decrease(uint64)", type(uint96).max - 1)
         );
 
@@ -68,7 +73,7 @@ contract CounterTest is Test {
 
         bytes32 slot0 = vm.load(address(counter), 0x0);
         // make sure you didn't mess up storage
-        assertEq(slot0, bytes32(abi.encodePacked(uint96(899), address(msg.sender))));
+        assertEq(slot0, bytes32(abi.encodePacked(uint96(899), address(yulDeployer))));
 
         counter.decrease(899);
         assertEq(counter.counter(), 0);

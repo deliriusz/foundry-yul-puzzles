@@ -1,5 +1,12 @@
 # About
-This is a repo containing Yul puzzles to improve your Yul skills. Shoutdout to CodeForce, who created this template.
+Virgin Solidity devs use Yul embedded into Solidity assembly block.
+Chads use pure Yul.
+Legends use Huff...
+
+Before being a legend, one shall go through the path of a Yul chad.
+
+## About, again
+This is a repo containing Yul puzzles to improve your Yul skills. Shoutdout to CodeForce, who created this template. GLHF!
 
 ## Repository installation
 

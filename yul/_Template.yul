@@ -18,7 +18,7 @@
 * If you want to check if your code works as expected, look at the test cases in test/_Template.
 
 * To run this beautiful guy, execute:
-forge test -vvv --match-test 'Counter'
+forge test -vvv --match-test '_Template'
 */
 
 object "_Template" {

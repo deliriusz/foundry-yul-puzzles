@@ -34,6 +34,10 @@
   }
 ```
 
+* Because Santa is a cheapskate, he wants you to put owner and counter in one storage slot:
+      96 bits counter                   160 bits addres
+|------------------------|----------------------------------------|
+
 * If you want to check if your code works as expected, look at the test cases in test/Counter.
 
 * To run this beautiful guy, execute:
@@ -44,7 +48,6 @@ object "Counter" {
   code {
     // YOUR CUSTOM CONSTRUCTOR LOGIC GOES HERE
 
-
     // copy all runtime code to memory
     datacopy(0, dataoffset("Runtime"), datasize("Runtime"))
 
@@ -54,6 +57,7 @@ object "Counter" {
   object "Runtime" {
     code {
       // YOUR CODE GOES HERE
+
     }
   }
 }
