@@ -9,7 +9,10 @@ contract YulDeployer is Test {
     ///@param fileName - The file name of the Yul contract. For example, the file name for "Example.yul" is "Example"
     ///@return deployedAddress - The address that the contract was deployed to
     function deployContract(string memory fileName) public returns (address) {
-        string memory bashCommand = string.concat('cast abi-encode "f(bytes)" $(solc --strict-assembly yul/', string.concat(fileName, ".yul --bin | grep '^[0-9a-fA-Z]*$')"));
+        string memory bashCommand = string.concat(
+            'cast abi-encode "f(bytes)" $(solc --strict-assembly yul/',
+            string.concat(fileName, ".yul --bin | grep '^[0-9a-fA-Z]*$')")
+        );
 
         string[] memory inputs = new string[](3);
         inputs[0] = "bash";
@@ -21,7 +24,7 @@ contract YulDeployer is Test {
         ///@notice deploy the bytecode with the create instruction
         address deployedAddress;
         assembly {
-            deployedAddress := create(0, add(bytecode, 0x20), mload(bytecode))
+            deployedAddress := create(0, bytecode, add(bytecode, 0x20))
         }
 
         ///@notice check that the deployment was successful
