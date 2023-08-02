@@ -68,6 +68,17 @@ object "Counter" {
       }
 
       case 0x9732187d { // decrease(uint64)
+
+        let fmp := mload(0x40)
+        let slot0 := sload(0)
+        let owner := and(slot0, mask)
+      
+        //Only owner check
+        if iszero(eq(owner, caller())){
+          mstore(0x0, 0x6666)
+          revert(0x0, 0x20)
+        }
+
         if lt(calldatasize(), 0x24) {
            mstore(0x0, 0x2222)
            revert(0x0, 0x20)

@@ -29,10 +29,13 @@ contract CounterTest is Test {
 
         assertEq(counter.counter(), 1);
         // make sure you didn't mess up storage
-        assertEq(slot0, bytes32(abi.encodePacked(uint96(1), address(yulDeployer))));
+        assertEq(
+            slot0,
+            bytes32(abi.encodePacked(uint96(1), address(yulDeployer)))
+        );
 
-        for(uint i; i < 10; i++) {
-           counter.increase();
+        for (uint i; i < 10; i++) {
+            counter.increase();
         }
 
         // test the same for other values
@@ -40,7 +43,10 @@ contract CounterTest is Test {
 
         assertEq(counter.counter(), 11);
         // make sure you didn't mess up storage
-        assertEq(slot0, bytes32(abi.encodePacked(uint96(11), address(yulDeployer))));
+        assertEq(
+            slot0,
+            bytes32(abi.encodePacked(uint96(11), address(yulDeployer)))
+        );
     }
 
     function test_Counter_owner() public {
@@ -54,12 +60,23 @@ contract CounterTest is Test {
 
         assertEq(counter.counter(), 1000);
 
+        // expect revert, because only owner can invoke it
+        vm.expectRevert();
+        counter.decrease(1);
+
+        // sets msg.sender to the owner
+        vm.startPrank(address(yulDeployer));
+
         // expect revert, because this function accepts only 64 bits uint
         (bool status, ) = address(counter).call(
             abi.encodeWithSignature("decrease(uint64)", type(uint96).max - 1)
         );
 
         assertEq(status, false);
+
+        // expect revert, because value is bigger than current counter
+        vm.expectRevert();
+        counter.decrease(1001);
 
         // expect revert, because value is bigger than current counter
         vm.expectRevert();
@@ -73,7 +90,10 @@ contract CounterTest is Test {
 
         bytes32 slot0 = vm.load(address(counter), 0x0);
         // make sure you didn't mess up storage
-        assertEq(slot0, bytes32(abi.encodePacked(uint96(899), address(yulDeployer))));
+        assertEq(
+            slot0,
+            bytes32(abi.encodePacked(uint96(899), address(yulDeployer)))
+        );
 
         counter.decrease(899);
         assertEq(counter.counter(), 0);
