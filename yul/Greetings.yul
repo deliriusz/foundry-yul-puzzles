@@ -65,7 +65,7 @@ object "Greetings" {
   object "Runtime" {
     code {
       // YOUR CODE GOES HERE
-      // You might want to know how strings are layed out in memory: 
+      // You might want to know how strings should be encoded: https://docs.soliditylang.org/en/v0.8.21/abi-spec.html#design-criteria-for-the-encoding
     }
   }
 }
